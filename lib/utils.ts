@@ -54,7 +54,7 @@ export const wetag = createETagGenerator({ weak: true })
  * @api private
  */
 
-export const normalizeType = function(type){
+export const normalizeType = function(type: string){
   return ~type.indexOf('/')
     ? acceptParams(type)
     : { value: (mime.lookup(type) || 'application/octet-stream'), params: {} }
@@ -68,7 +68,7 @@ export const normalizeType = function(type){
  * @api private
  */
 
-export const normalizeTypes = function(types) {
+export const normalizeTypes = function(types: string[]) {
   return types.map(normalizeType);
 };
 
@@ -82,7 +82,7 @@ export const normalizeTypes = function(types) {
  * @api private
  */
 
-function acceptParams (str) {
+function acceptParams (str: string) {
   var length = str.length;
   var colonIndex = str.indexOf(';');
   var index = colonIndex === -1 ? length : colonIndex;
@@ -123,7 +123,7 @@ function acceptParams (str) {
  * @api private
  */
 
-export const compileETag = function(val) {
+export const compileETag = function(val: boolean | string | Function) {
   var fn;
 
   if (typeof val === 'function') {
@@ -155,7 +155,7 @@ export const compileETag = function(val) {
  * @api private
  */
 
-export const compileQueryParser = function compileQueryParser(val) {
+export const compileQueryParser = function compileQueryParser(val: string | boolean | Function) {
   var fn;
 
   if (typeof val === 'function') {
@@ -187,7 +187,7 @@ export const compileQueryParser = function compileQueryParser(val) {
  * @api private
  */
 
-export const compileTrust = function(val) {
+export const compileTrust = function(val: boolean | string | number | string[] | Function) {
   if (typeof val === 'function') return val;
 
   if (val === true) {
@@ -197,7 +197,7 @@ export const compileTrust = function(val) {
 
   if (typeof val === 'number') {
     // Support trusting hop count
-    return function(a, i){ return i < val };
+    return function(a: string, i: number){ return i < (val as number) };
   }
 
   if (typeof val === 'string') {
@@ -218,7 +218,7 @@ export const compileTrust = function(val) {
  * @api private
  */
 
-export const setCharset = function setCharset(type, charset) {
+export const setCharset = function setCharset(type: string, charset: string) {
   if (!type || !charset) {
     return type;
   }
@@ -242,8 +242,8 @@ export const setCharset = function setCharset(type, charset) {
  * @private
  */
 
-function createETagGenerator (options) {
-  return function generateETag (body, encoding) {
+function createETagGenerator (options: etagOriginal.Options) {
+  return function generateETag (body: string | Buffer, encoding: BufferEncoding) {
     var buf = !Buffer.isBuffer(body)
       ? Buffer.from(body, encoding)
       : body
@@ -260,7 +260,7 @@ function createETagGenerator (options) {
  * @private
  */
 
-function parseExtendedQueryString(str) {
+function parseExtendedQueryString(str: string) {
   return qs.parse(str, {
     allowPrototypes: true
   });
