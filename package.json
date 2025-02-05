@@ -61,6 +61,13 @@
     "vary": "~1.1.2"
   },
   "devDependencies": {
+    "@tsconfig/node18": "^18.2.4",
+    "@types/content-type": "^1.1.8",
+    "@types/etag": "^1.8.3",
+    "@types/mime-types": "^2.1.4",
+    "@types/node": "^18",
+    "@types/proxy-addr": "^2.0.3",
+    "@types/qs": "^6.9.18",
     "after": "0.8.2",
     "connect-redis": "8.0.1",
     "cookie-parser": "1.4.7",
@@ -76,6 +83,7 @@
     "nyc": "15.1.0",
     "pbkdf2-password": "1.2.1",
     "supertest": "6.3.0",
+    "typescript": "^5.7.3",
     "vhost": "~3.0.2"
   },
   "engines": {
@@ -94,5 +102,6 @@
     "test-ci": "nyc --exclude examples --exclude test --exclude benchmarks --reporter=lcovonly --reporter=text npm test",
     "test-cov": "nyc --exclude examples --exclude test --exclude benchmarks --reporter=html --reporter=text npm test",
     "test-tap": "mocha --require test/support/env --reporter tap --check-leaks test/ test/acceptance/"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
 }
