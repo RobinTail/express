@@ -83,25 +83,25 @@ export const normalizeTypes = function(types: string[]) {
  */
 
 function acceptParams (str: string) {
-  var length = str.length;
-  var colonIndex = str.indexOf(';');
-  var index = colonIndex === -1 ? length : colonIndex;
-  var ret = { value: str.slice(0, index).trim(), quality: 1, params: {} };
+  const length = str.length;
+  const colonIndex = str.indexOf(';');
+  let index = colonIndex === -1 ? length : colonIndex;
+  const ret = { value: str.slice(0, index).trim(), quality: 1, params: {} as Record<string, string> };
 
   while (index < length) {
-    var splitIndex = str.indexOf('=', index);
+    const splitIndex = str.indexOf('=', index);
     if (splitIndex === -1) break;
 
-    var colonIndex = str.indexOf(';', index);
-    var endIndex = colonIndex === -1 ? length : colonIndex;
+    const colonIndex = str.indexOf(';', index);
+    const endIndex = colonIndex === -1 ? length : colonIndex;
 
     if (splitIndex > endIndex) {
       index = str.lastIndexOf(';', splitIndex - 1) + 1;
       continue;
     }
 
-    var key = str.slice(index, splitIndex).trim();
-    var value = str.slice(splitIndex + 1, endIndex).trim();
+    const key = str.slice(index, splitIndex).trim();
+    const value = str.slice(splitIndex + 1, endIndex).trim();
 
     if (key === 'q') {
       ret.quality = parseFloat(value);
@@ -124,7 +124,7 @@ function acceptParams (str: string) {
  */
 
 export const compileETag = function(val: boolean | string | Function) {
-  var fn;
+  let fn;
 
   if (typeof val === 'function') {
     return val;
@@ -156,7 +156,7 @@ export const compileETag = function(val: boolean | string | Function) {
  */
 
 export const compileQueryParser = function compileQueryParser(val: string | boolean | Function) {
-  var fn;
+  let fn;
 
   if (typeof val === 'function') {
     return val;
@@ -224,7 +224,7 @@ export const setCharset = function setCharset(type: string, charset: string) {
   }
 
   // parse type
-  var parsed = contentType.parse(type);
+  const parsed = contentType.parse(type);
 
   // set charset
   parsed.parameters.charset = charset;
@@ -244,7 +244,7 @@ export const setCharset = function setCharset(type: string, charset: string) {
 
 function createETagGenerator (options: etagOriginal.Options) {
   return function generateETag (body: string | Buffer, encoding: BufferEncoding) {
-    var buf = !Buffer.isBuffer(body)
+    const buf = !Buffer.isBuffer(body)
       ? Buffer.from(body, encoding)
       : body
 
